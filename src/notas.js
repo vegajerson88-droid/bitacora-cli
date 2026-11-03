@@ -3,7 +3,7 @@ const os = require('os');
 const path = require('path');
 const objectHash = require('object-hash');
 const almacen = require('./almacen');
-const { getTimeStamp, getLongTime, getShortDate } = require('./fechas');
+const { getTimeStamp, getLongTime, getShortDate } = require('fechas-bitacora-jerson');
 
 // El id son los primeros 8 caracteres del hash del texto
 function crearId(texto) {

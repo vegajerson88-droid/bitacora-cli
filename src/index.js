@@ -1,7 +1,7 @@
 // Lee los argumentos y decide qué comando ejecutar.
 const notas = require('./notas');
 const almacen = require('./almacen');
-const { getLongTime, getShortDate } = require('./fechas');
+const { getLongTime, getShortDate } = require('fechas-bitacora-jerson');
 
 const CANTIDAD_POR_DEFECTO = 5;
 
