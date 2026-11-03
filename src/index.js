@@ -12,10 +12,14 @@ function mostrarAyuda() {
   npm start -- listar [N]                     Muestra las últimas N notas (por defecto ${CANTIDAD_POR_DEFECTO})
   npm start -- buscar <palabra>               Busca notas que contengan la palabra
   npm start -- borrar <id>                    Borra la nota con ese id
+  npm start -- respaldar                      Copia las notas a la carpeta respaldos/
+  npm start -- exportar [carpeta]             Exporta las notas a exportacion.txt en esa carpeta
+                                              (ruta absoluta; por defecto tu carpeta personal)
   npm start -- ayuda                          Muestra esta ayuda
 
 Ejemplo:
-  npm start -- agregar "Hoy aprendí a usar fs" nodejs`);
+  npm start -- agregar "Hoy aprendí a usar fs" nodejs
+  npm start -- exportar /tmp`);
   return 'ayuda mostrada';
 }
 
@@ -85,6 +89,18 @@ function comandoBorrar(id) {
   return `id inexistente ${id}`;
 }
 
+function comandoRespaldar() {
+  const archivo = notas.respaldar();
+  console.log(`Respaldo creado: ${archivo}`);
+  return `respaldo creado ${archivo}`;
+}
+
+function comandoExportar(carpeta) {
+  const resultado = notas.exportar(carpeta);
+  console.log(`Se exportaron ${resultado.cantidad} notas a ${resultado.rutaFinal}`);
+  return `exportadas ${resultado.cantidad} notas a ${resultado.rutaFinal}`;
+}
+
 // Elige qué comando ejecutar y devuelve el resultado para el log
 function ejecutar(comando, argumentos) {
   switch (comando) {
@@ -96,6 +112,10 @@ function ejecutar(comando, argumentos) {
       return comandoBuscar(argumentos[0]);
     case 'borrar':
       return comandoBorrar(argumentos[0]);
+    case 'respaldar':
+      return comandoRespaldar();
+    case 'exportar':
+      return comandoExportar(argumentos[0]);
     case 'ayuda':
       return mostrarAyuda();
     default:

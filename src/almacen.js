@@ -5,6 +5,8 @@ const path = require('path');
 const carpetaData = path.join(__dirname, '..', 'data');
 const archivoNotas = path.join(carpetaData, 'notas.json');
 const archivoLog = path.join(carpetaData, 'bitacora.log');
+const carpetaRespaldos = path.join(__dirname, '..', 'respaldos');
+const carpetaSalida = path.join(__dirname, '..', 'salida');
 
 // Crea la carpeta y el archivo si no existen
 function asegurarArchivo() {
@@ -42,4 +44,57 @@ function registrarLog(fecha, comando, resultado) {
   fs.appendFileSync(archivoLog, `${fecha} | ${comando} | ${resultado}\n`);
 }
 
-module.exports = { leerNotas, guardarNotas, registrarLog };
+// Copia notas.json a respaldos/notas_<marca-de-tiempo>.json
+function copiarRespaldo(marcaDeTiempo) {
+  asegurarArchivo();
+  if (!fs.existsSync(carpetaRespaldos)) {
+    fs.mkdirSync(carpetaRespaldos, { recursive: true });
+  }
+  const destino = path.join(carpetaRespaldos, `notas_${marcaDeTiempo}.json`);
+  fs.copyFileSync(archivoNotas, destino);
+  return destino;
+}
+
+// Escribe exportacion.txt dentro de salida/ y devuelve su ruta
+function escribirExportacion(texto) {
+  if (!fs.existsSync(carpetaSalida)) {
+    fs.mkdirSync(carpetaSalida, { recursive: true });
+  }
+  const archivo = path.join(carpetaSalida, 'exportacion.txt');
+  fs.writeFileSync(archivo, texto);
+  return archivo;
+}
+
+function esCarpeta(ruta) {
+  return fs.existsSync(ruta) && fs.statSync(ruta).isDirectory();
+}
+
+// Mueve un archivo. Si origen y destino están en discos distintos
+// renameSync falla con EXDEV, así que copiamos y borramos el original.
+function moverArchivo(origen, destino) {
+  try {
+    fs.renameSync(origen, destino);
+  } catch (error) {
+    if (error.code === 'EXDEV') {
+      fs.copyFileSync(origen, destino);
+      fs.unlinkSync(origen);
+    } else {
+      throw error;
+    }
+  }
+}
+
+function existeArchivo(ruta) {
+  return fs.existsSync(ruta);
+}
+
+module.exports = {
+  leerNotas,
+  guardarNotas,
+  registrarLog,
+  copiarRespaldo,
+  escribirExportacion,
+  esCarpeta,
+  moverArchivo,
+  existeArchivo,
+};
