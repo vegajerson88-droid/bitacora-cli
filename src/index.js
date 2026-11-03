@@ -1,5 +1,6 @@
 // Lee los argumentos y decide qué comando ejecutar.
 const notas = require('./notas');
+const almacen = require('./almacen');
 const { getLongTime, getShortDate } = require('./fechas');
 
 const CANTIDAD_POR_DEFECTO = 5;
@@ -15,6 +16,7 @@ function mostrarAyuda() {
 
 Ejemplo:
   npm start -- agregar "Hoy aprendí a usar fs" nodejs`);
+  return 'ayuda mostrada';
 }
 
 function formatearNota(nota) {
@@ -24,15 +26,16 @@ function formatearNota(nota) {
 function comandoAgregar(texto, etiqueta) {
   if (!texto || texto.trim() === '') {
     console.log('Falta el texto de la nota. Ejemplo: agregar "Hoy aprendí fs" nodejs');
-    return;
+    return 'error: falta el texto';
   }
   const resultado = notas.agregarNota(texto.trim(), etiqueta || 'general');
   const nota = resultado.nota;
   if (resultado.guardada) {
     console.log(`Nota guardada [${nota.id}] (${nota.etiqueta}) — ${getLongTime('es-ES', nota.fecha)}`);
-  } else {
-    console.log(`Ya existe una nota igual (id ${nota.id}). No se guardó.`);
+    return `nota guardada ${nota.id}`;
   }
+  console.log(`Ya existe una nota igual (id ${nota.id}). No se guardó.`);
+  return `duplicada ${nota.id}`;
 }
 
 function comandoListar(valor) {
@@ -48,58 +51,75 @@ function comandoListar(valor) {
   const lista = notas.listarNotas(cantidad);
   if (lista.length === 0) {
     console.log('Todavía no hay notas guardadas.');
-    return;
+    return 'sin notas';
   }
   lista.forEach((nota) => console.log(formatearNota(nota)));
+  return `${lista.length} notas mostradas`;
 }
 
 function comandoBuscar(palabra) {
   if (!palabra) {
     console.log('Falta la palabra a buscar. Ejemplo: buscar fs');
-    return;
+    return 'error: falta la palabra';
   }
   const encontradas = notas.buscarNotas(palabra);
   if (encontradas.length === 0) {
     console.log(`No hay notas que contengan "${palabra}".`);
-    return;
+    return `sin resultados para "${palabra}"`;
   }
   encontradas.forEach((nota) => console.log(formatearNota(nota)));
+  return `${encontradas.length} coincidencias para "${palabra}"`;
 }
 
 function comandoBorrar(id) {
   if (!id) {
     console.log('Falta el id de la nota. Ejemplo: borrar 3f9a1c2e');
-    return;
+    return 'error: falta el id';
   }
   const borrada = notas.borrarNota(id);
   if (borrada) {
     console.log(`Nota [${borrada.id}] borrada.`);
-  } else {
-    console.log(`No existe ninguna nota con el id ${id}.`);
+    return `nota borrada ${borrada.id}`;
+  }
+  console.log(`No existe ninguna nota con el id ${id}.`);
+  return `id inexistente ${id}`;
+}
+
+// Elige qué comando ejecutar y devuelve el resultado para el log
+function ejecutar(comando, argumentos) {
+  switch (comando) {
+    case 'agregar':
+      return comandoAgregar(argumentos[0], argumentos[1]);
+    case 'listar':
+      return comandoListar(argumentos[0]);
+    case 'buscar':
+      return comandoBuscar(argumentos[0]);
+    case 'borrar':
+      return comandoBorrar(argumentos[0]);
+    case 'ayuda':
+      return mostrarAyuda();
+    default:
+      if (comando) {
+        console.log(`El comando "${comando}" no existe.\n`);
+      }
+      mostrarAyuda();
+      return comando ? 'comando no existe' : 'sin comando, se mostró la ayuda';
   }
 }
 
 const [comando, ...argumentos] = process.argv.slice(2);
+let resultado;
 
-switch (comando) {
-  case 'agregar':
-    comandoAgregar(argumentos[0], argumentos[1]);
-    break;
-  case 'listar':
-    comandoListar(argumentos[0]);
-    break;
-  case 'buscar':
-    comandoBuscar(argumentos[0]);
-    break;
-  case 'borrar':
-    comandoBorrar(argumentos[0]);
-    break;
-  case 'ayuda':
-    mostrarAyuda();
-    break;
-  default:
-    if (comando) {
-      console.log(`El comando "${comando}" no existe.\n`);
-    }
-    mostrarAyuda();
+try {
+  resultado = ejecutar(comando, argumentos);
+} catch (error) {
+  console.log(`Error: ${error.message}`);
+  resultado = `error: ${error.message}`;
+}
+
+// El log nunca debe tumbar el programa
+try {
+  almacen.registrarLog(getLongTime(), comando || '(ninguno)', resultado);
+} catch (error) {
+  console.log(`No se pudo escribir la bitácora: ${error.message}`);
 }
