@@ -229,21 +229,13 @@ git log --oneline
 
 ## Evidencias (capturas de pantalla)
 
-En la carpeta `evidencias/` hay archivos `.txt` con la **salida real de la terminal** de cada prueba. Salieron de las ejecuciones hechas al construir el proyecto (en otro computador, por eso verás rutas distintas a las tuyas). Sirven de referencia, **pero lo que entregas son capturas hechas por ti en tu Ubuntu.**
+Las 5 capturas ya están en la carpeta `evidencias/`:
 
-**Cómo tomar una captura en Ubuntu 24.04:** presiona la tecla **`Impr Pant`** (Print Screen). Aparece una barra: elige el rectángulo, selecciona la ventana de la terminal y pulsa el botón redondo. Queda guardada en `~/Imágenes/Capturas de pantalla`. Muévelas a la carpeta de evidencias con:
-
-```bash
-mv ~/Imágenes/Capturas\ de\ pantalla/* ~/taller-node/bitacora-cli/evidencias/
-```
-
-### Lista de evidencias pendientes (marca cuando las tengas)
-
-- [ ] **Captura 1:** una sesión con los 7 comandos (pasos del punto 7) → guárdala como `01_siete_comandos.png`
-- [ ] **Captura 2:** el rechazo de la nota duplicada (punto 9) → `02_nota_duplicada.png`
-- [ ] **Captura 3:** `notas.json` dañado y el mensaje controlado (punto 12c) → `03_notas_json_danado.png`
-- [ ] **Captura 4:** la salida de `npm publish --dry-run` (punto 14) → `04_npm_publish_dry_run.png`
-- [ ] **Captura 5:** `npm ls` y `ls -l node_modules | grep fechas` (punto 13) → `05_npm_link.png`
+- [x] `01_siete_comandos.png`: sesión con los 7 comandos
+- [x] `02_nota_duplicada.png`: rechazo de la nota duplicada
+- [x] `03_notas_json_danado.png`: `notas.json` dañado y mensaje controlado
+- [x] `04_npm_publish_dry_run.png`: salida de `npm publish --dry-run`
+- [x] `05_npm_link.png`: `npm ls` y enlace simbólico de `npm link`
 
 ---
 
