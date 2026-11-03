@@ -1,0 +1,15 @@
+EVIDENCIA 3 - notas.json dañado con mensaje controlado
+
+$ echo 'esto es texto basura {{{' > data/notas.json
+
+$ npm start -- listar
+Error: El archivo /home/claude/taller-node/bitacora-cli/data/notas.json está dañado y no se puede leer. Revisa su contenido o bórralo para empezar de nuevo.
+
+$ npm start -- agregar esta no debe guardarse
+Error: El archivo /home/claude/taller-node/bitacora-cli/data/notas.json está dañado y no se puede leer. Revisa su contenido o bórralo para empezar de nuevo.
+
+(archivo restaurado)
+
+$ npm start -- listar
+[3d79f3e7] (nodejs) 03/11/2026 — Hoy aprendí a usar fs
+

@@ -1,0 +1,22 @@
+EVIDENCIA 4 - npm publish --dry-run (no se publicó nada)
+
+$ cd ../fechas-bitacora-jerson && npm publish --dry-run
+npm notice
+npm notice package: fechas-bitacora-jerson@1.0.0
+npm notice Tarball Contents
+npm notice 967B README.md
+npm notice 685B index.js
+npm notice 306B package.json
+npm notice Tarball Details
+npm notice name: fechas-bitacora-jerson
+npm notice version: 1.0.0
+npm notice filename: fechas-bitacora-jerson-1.0.0.tgz
+npm notice package size: 979 B
+npm notice unpacked size: 2.0 kB
+npm notice shasum: 226f4b942f255e4e9faf5a94e45cfcf3dbffdb46
+npm notice integrity: sha512-ErwmvlbtleGve[...]IfuiX/5MYXGLA==
+npm notice total files: 3
+npm notice
+npm warn This command requires you to be logged in to https://registry.npmjs.org/ (dry-run)
+npm notice Publishing to https://registry.npmjs.org/ with tag latest and default access (dry-run)
++ fechas-bitacora-jerson@1.0.0

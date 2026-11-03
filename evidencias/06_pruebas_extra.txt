@@ -1,0 +1,82 @@
+EVIDENCIA 6 - Pruebas extra (validaciones y rutas)
+
+$ npm start -- listar 0
+"0" no es una cantidad válida. Se usará 5.
+[3d79f3e7] (nodejs) 03/11/2026 — Hoy aprendí a usar fs
+
+$ npm start -- listar abc
+"abc" no es una cantidad válida. Se usará 5.
+[3d79f3e7] (nodejs) 03/11/2026 — Hoy aprendí a usar fs
+
+$ npm start -- agregar 
+Falta el texto de la nota. Ejemplo: agregar "Hoy aprendí fs" nodejs
+
+$ npm start -- borrar noexiste
+No existe ninguna nota con el id noexiste.
+
+$ npm start -- 
+Bitácora CLI - uso:
+
+  npm start -- agregar "<texto>" [etiqueta]   Guarda una nota (etiqueta por defecto: general)
+  npm start -- listar [N]                     Muestra las últimas N notas (por defecto 5)
+  npm start -- buscar <palabra>               Busca notas que contengan la palabra
+  npm start -- borrar <id>                    Borra la nota con ese id
+  npm start -- respaldar                      Copia las notas a la carpeta respaldos/
+  npm start -- exportar [carpeta]             Exporta las notas a exportacion.txt en esa carpeta
+                                              (ruta absoluta; por defecto tu carpeta personal)
+  npm start -- ayuda                          Muestra esta ayuda
+
+Ejemplo:
+  npm start -- agregar "Hoy aprendí a usar fs" nodejs
+  npm start -- exportar /tmp
+
+$ npm start -- comandoraro
+El comando "comandoraro" no existe.
+
+Bitácora CLI - uso:
+
+  npm start -- agregar "<texto>" [etiqueta]   Guarda una nota (etiqueta por defecto: general)
+  npm start -- listar [N]                     Muestra las últimas N notas (por defecto 5)
+  npm start -- buscar <palabra>               Busca notas que contengan la palabra
+  npm start -- borrar <id>                    Borra la nota con ese id
+  npm start -- respaldar                      Copia las notas a la carpeta respaldos/
+  npm start -- exportar [carpeta]             Exporta las notas a exportacion.txt en esa carpeta
+                                              (ruta absoluta; por defecto tu carpeta personal)
+  npm start -- ayuda                          Muestra esta ayuda
+
+Ejemplo:
+  npm start -- agregar "Hoy aprendí a usar fs" nodejs
+  npm start -- exportar /tmp
+
+$ npm start -- exportar carpeta/relativa
+Error: La ruta "carpeta/relativa" no es absoluta. Ejemplo: /home/tu-usuario/Escritorio
+
+$ npm start -- exportar /ruta/que/no/existe
+Error: La carpeta "/ruta/que/no/existe" no existe.
+
+$ cd src && node index.js listar 2   (ejecutado desde otra carpeta)
+[3d79f3e7] (nodejs) 03/11/2026 — Hoy aprendí a usar fs
+
+$ cat data/bitacora.log
+martes, 3 de noviembre de 2026, 20:26:49 UTC | agregar | nota guardada 3d79f3e7
+martes, 3 de noviembre de 2026, 20:26:49 UTC | agregar | nota guardada c04e1c57
+martes, 3 de noviembre de 2026, 20:26:49 UTC | listar | 2 notas mostradas
+martes, 3 de noviembre de 2026, 20:26:50 UTC | buscar | 1 coincidencias para "FS"
+martes, 3 de noviembre de 2026, 20:26:50 UTC | borrar | nota borrada c04e1c57
+martes, 3 de noviembre de 2026, 20:26:50 UTC | respaldar | respaldo creado /home/claude/taller-node/bitacora-cli/respaldos/notas_1793737610569.json
+martes, 3 de noviembre de 2026, 20:26:50 UTC | exportar | exportadas 1 notas a /tmp/evid_destino/exportacion.txt
+martes, 3 de noviembre de 2026, 20:26:50 UTC | ayuda | ayuda mostrada
+martes, 3 de noviembre de 2026, 20:26:51 UTC | agregar | duplicada 3d79f3e7
+martes, 3 de noviembre de 2026, 20:26:51 UTC | agregar | duplicada 3d79f3e7
+martes, 3 de noviembre de 2026, 20:26:51 UTC | listar | error: El archivo /home/claude/taller-node/bitacora-cli/data/notas.json está dañado y no se puede leer. Revisa su contenido o bórralo para empezar de nuevo.
+martes, 3 de noviembre de 2026, 20:26:51 UTC | agregar | error: El archivo /home/claude/taller-node/bitacora-cli/data/notas.json está dañado y no se puede leer. Revisa su contenido o bórralo para empezar de nuevo.
+martes, 3 de noviembre de 2026, 20:26:52 UTC | listar | 1 notas mostradas
+martes, 3 de noviembre de 2026, 20:26:54 UTC | listar | 1 notas mostradas
+martes, 3 de noviembre de 2026, 20:26:54 UTC | listar | 1 notas mostradas
+martes, 3 de noviembre de 2026, 20:26:55 UTC | agregar | error: falta el texto
+martes, 3 de noviembre de 2026, 20:26:55 UTC | borrar | id inexistente noexiste
+martes, 3 de noviembre de 2026, 20:26:55 UTC | (ninguno) | sin comando, se mostró la ayuda
+martes, 3 de noviembre de 2026, 20:26:55 UTC | comandoraro | comando no existe
+martes, 3 de noviembre de 2026, 20:26:55 UTC | exportar | error: La ruta "carpeta/relativa" no es absoluta. Ejemplo: /home/tu-usuario/Escritorio
+martes, 3 de noviembre de 2026, 20:26:56 UTC | exportar | error: La carpeta "/ruta/que/no/existe" no existe.
+martes, 3 de noviembre de 2026, 20:26:56 UTC | listar | 1 notas mostradas
