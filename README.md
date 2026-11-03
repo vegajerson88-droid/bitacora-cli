@@ -123,4 +123,5 @@ y descarga las mismas dependencias.
 **5. ¿Qué diferencia viste al importar tu paquete CommonJS desde tu proyecto?**
 
 Se importa igual que `object-hash`: `require('fechas-bitacora-jerson')`, solo con el nombre y sin `./`.
-Lo único que cambió respecto a `fechas.js` es esa línea. Con `npm link`, en `node_modules` aparece un enlace simbólico hacia la carpeta del paquete.
+Lo único que cambió respecto a `fechas.js` fue esa línea, y en `node_modules` quedó un enlace simbólico por el `npm link`.
+Si mi bitácora fuera ES Modules se importaría con `import` (Node deja importar CommonJS desde ES Modules); como las dos son CommonJS, no cambia nada más.
